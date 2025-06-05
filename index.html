@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JGS Advanced Copilot AI Developer Tool</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet"/>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            overflow-x: hidden;
+        }
+        
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(5deg); }
+        }
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+        
+        @keyframes slideIn {
+            0% { transform: translateY(100px); opacity: 0; }
+            100% { transform: translateY(0); opacity: 1; }
+        }
+        
+        @keyframes popIn {
+            0% { transform: scale(0.8) translateY(50px); opacity: 0; }
+            100% { transform: scale(1) translateY(0); opacity: 1; }
+        }
+        
+        @keyframes shimmer {
+            0% { background-position: -200% center; }
+            100% { background-position: 200% center; }
+        }
+        
+        @keyframes typewriter {
+            from { width: 0; }
+            to { width: 100%; }
+        }
+        
+        @keyframes blink {
+            50% { border-color: transparent; }
+        }
+        
+        .gradient-bg {
+            background: linear-gradient(-45deg, #0a0a3a, #130749, #040230, #032329, #011a11, #0a3a2e);
+            background-size: 400% 400%;
+            animation: gradientShift 15s ease infinite;
+        }
+        
+        .floating {
+            animation: float 6s ease-in-out infinite;
+        }
+        
+        .slide-in {
+            animation: slideIn 1s ease-out forwards;
+        }
+        
+        .pop-in {
+            animation: popIn 0.5s ease-out forwards;
+        }
+        
+        .shimmer-text {
+            background: linear-gradient(90deg, #4f46e5, #06b6d4, #10b981, #f59e0b, #ef4444, #4f46e5);
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: shimmer 3s linear infinite;
+        }
+        .h2 {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #ffffff;
+        }
+        .h3 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #ffffff;
+        }
+        
+        .glass-effect {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .typing-effect {
+            overflow: hidden;
+            border-right: 2px solid #4f46e5;
+            white-space: nowrap;
+            animation: typewriter 3s steps(40) 1s both, blink 1s step-end infinite;
+        }
+        
+        .loading-bar {
+            width: 0%;
+            height: 4px;
+            background: linear-gradient(90deg, #4f46e5, #06b6d4, #10b981);
+            transition: width 0.1s ease;
+        }
+        
+        .particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: #4f46e5;
+            border-radius: 50%;
+            animation: float 4s ease-in-out infinite;
+        }
+        
+        .modal-backdrop {
+            backdrop-filter: blur(10px);
+            background: rgba(0, 0, 0, 0.5);
+        }
+        
+        .form-input {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            transition: all 0.3s ease;
+        }
+        
+        .form-input:focus {
+            background: rgba(255, 255, 255, 0.15);
+            border-color: #4f46e5;
+            box-shadow: 0 0 20px rgba(79, 70, 229, 0.3);
+        }
+        
+        .tech-icon {
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .tech-icon:hover {
+            transform: scale(1.1);
+            filter: drop-shadow(0 0 15px currentColor);
+        }
+        
+        .tech-icon.selected {
+            transform: scale(1.2);
+            filter: drop-shadow(0 0 20px currentColor);
+        }
+    </style>
+</head>
+<body class="gradient-bg min-h-screen">
+    <!-- Particle Background -->
+    <div class="fixed inset-0 overflow-hidden pointer-events-none">
+        <div class="particle" style="left: 10%; animation-delay: 0s;"></div>
+        <div class="particle" style="left: 20%; animation-delay: 1s;"></div>
+        <div class="particle" style="left: 30%; animation-delay: 2s;"></div>
+        <div class="particle" style="left: 40%; animation-delay: 0.5s;"></div>
+        <div class="particle" style="left: 50%; animation-delay: 1.5s;"></div>
+        <div class="particle" style="left: 60%; animation-delay: 2.5s;"></div>
+        <div class="particle" style="left: 70%; animation-delay: 0.2s;"></div>
+        <div class="particle" style="left: 80%; animation-delay: 1.8s;"></div>
+        <div class="particle" style="left: 90%; animation-delay: 2.2s;"></div>
+    </div>
+
+    <div class="relative z-10 flex flex-col items-center px-4 sm:px-6 md:px-12 lg:px-24">
+        <!-- Header -->
+        <div class="pt-8 flex flex-col items-center max-w-5xl w-full">
+            <div class="mb-6 slide-in">
+                <button class="inline-flex items-center gap-2 text-xs font-semibold text-white bg-gradient-to-r from-[#4f9dff] to-[#00d084] rounded-full px-4 py-2 border border-white/30 glass-effect hover:scale-105 transition-transform duration-300">
+                    <i class="fas fa-robot text-white floating"></i>
+                    JGS LANKA Co. Project IDE
+                    <span class="ml-1">V1.0 2025</span>
+                </button>
+            </div>
+            
+            <h1 class="text-white font-extrabold text-center text-3xl sm:text-4xl md:text-6xl leading-tight max-w-4xl mb-4 slide-in shimmer-text">
+                JGS Live Code Editor V1.0 2025<br/></h1>
+            <h2 class="h2 text-center text-xl sm:text-2xl md:text-3xl slide-in" style="animation-delay: 0.2s;">Powered by the latest artificial intelligence</h2>
+            <!-- User Welcome Message (Hidden initially) -->
+            <div id="welcomeMessage" class="hidden text-center mb-6">
+                <h2 class="text-2xl md:text-3xl font-bold text-white shimmer-text">
+                    Hi 👋 <span id="userName"></span><br/>
+                    Welcome to JGS LANKA Co. Project IDE JGS Live Code Editor V1.0 2025
+                </h2>
+            </div>
+            
+            <button id="getStartedBtn" class="mt-6 bg-white text-black font-semibold text-sm sm:text-base rounded-lg px-8 py-3 hover:bg-gray-200 flex items-center gap-2 transition-all duration-300 hover:scale-105 shadow-lg pop-in">
+                Get started with AI
+                <i class="fas fa-chevron-right text-xs"></i>
+            </button>
+        </div>
+
+        <!-- Main Image -->
+        <div class="relative mt-12 max-w-7xl w-full flex justify-center slide-in">
+            <img alt="Screenshot of a code editor interface" class="w-full max-w-7xl rounded-2xl shadow-2xl glass-effect p-2" height="600" src="bg.png" width="1200"/>
+            <img alt="3D purple robot head" class="absolute top-0 right-0 -translate-x-12 -translate-y-12 w-24 h-24 sm:w-32 sm:h-32 floating" height="150" src="pik.png" width="150"/>
+        </div>
+    </div>
+
+    <!-- Popup Modal -->
+    <div id="popupModal" class="fixed inset-0 z-50 hidden items-center justify-center modal-backdrop">
+        <div class="max-w-md w-full mx-4 glass-effect rounded-2xl p-8 pop-in">
+            <!-- Close Button -->
+            <button id="closePopupBtn" class="absolute top-4 right-4 text-white hover:text-gray-300 transition-colors duration-200">
+    <i class="fas fa-times text-lg"></i>
+</button>
+
+            <!-- Animated Header -->
+            <div class="text-center mb-6">
+                <h2 class="text-2xl font-bold text-white shimmer-text mb-2">
+                    JGS Advance Live Code Editor VR 1.0
+                </h2>
+                <p id="typingText" class="text-gray-300 text-sm typing-effect">
+                    Welcome to the future of coding experience
+                </p>
+            </div>
+
+            <!-- Form -->
+            <form id="userForm" class="space-y-6">
+                <div>
+                    <label class="block text-white text-sm font-medium mb-2">
+                        <i class="fas fa-user mr-2"></i>Enter Your Name
+                    </label>
+                    <input type="text" id="userName" name="userName" required 
+                           class="w-full px-4 py-3 rounded-lg form-input text-white placeholder-gray-400 focus:outline-none"
+                           placeholder="Your full name">
+                </div>
+
+                <div>
+                    <label class="block text-white text-sm font-medium mb-2">
+                        <i class="fas fa-calendar mr-2"></i>Date of Birth
+                    </label>
+                    <input type="date" id="dateOfBirth" name="dateOfBirth" required 
+                           class="w-full px-4 py-3 rounded-lg form-input text-white focus:outline-none">
+                </div>
+
+                <div>
+                    <label class="block text-white text-sm font-medium mb-2">
+                        <i class="fas fa-heart mr-2"></i>You Like
+                    </label>
+                    <div class="flex justify-center space-x-6">
+                        <div class="tech-icon text-4xl text-orange-500" data-tech="html">
+                            <i class="fab fa-html5"></i>
+                            <div class="text-xs mt-1 text-center">HTML</div>
+                        </div>
+                        <div class="tech-icon text-4xl text-yellow-400" data-tech="js">
+                            <i class="fab fa-js-square"></i>
+                            <div class="text-xs mt-1 text-center">JS</div>
+                        </div>
+                        <div class="tech-icon text-4xl text-blue-500" data-tech="python">
+                            <i class="fab fa-python"></i>
+                            <div class="text-xs mt-1 text-center">Python</div>
+                        </div>
+                    </div>
+                    <input type="hidden" id="techPreference" name="techPreference" required>
+                </div>
+
+                <button type="submit" 
+                        class="w-full bg-gradient-to-r from-[#4f46e5] to-[#06b6d4] text-white font-semibold py-3 rounded-lg hover:from-[#4338ca] hover:to-[#0891b2] transition-all duration-300 transform hover:scale-105">
+                    <i class="fas fa-rocket mr-2"></i>Get Started
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Loading Modal -->
+    <div id="loadingModal" class="fixed inset-0 z-50 hidden items-center justify-center modal-backdrop">
+        <div class="glass-effect rounded-2xl p-8 text-center max-w-sm mx-4">
+            <div class="mb-4">
+                <i class="fas fa-rocket text-4xl text-blue-400 floating"></i>
+            </div>
+            <h3 class="text-white text-xl font-bold mb-4">Launching IDE...</h3>
+            <div class="w-full bg-gray-700 rounded-full h-2 mb-4">
+                <div id="loadingProgress" class="loading-bar rounded-full"></div>
+            </div>
+            <p class="text-gray-300 text-sm">Initializing your workspace</p>
+        </div>
+    </div>
+
+    <script>
+         const popupCloseBtn = document.getElementById("closePopupBtn");
+        // Check if user data exists in localStorage
+        const userData = JSON.parse(localStorage.getItem('jgsUserData'));
+        
+        if (userData) {
+            // Show welcome message
+            document.getElementById('welcomeMessage').classList.remove('hidden');
+            document.getElementById('userName').textContent = userData.userName;
+        }
+
+        // Get Started Button Click Handler
+        document.getElementById('getStartedBtn').addEventListener('click', function() {
+            if (userData) {
+                // User already registered, go directly to loading
+                showLoading();
+            } else {
+                // Show popup form
+                document.getElementById('popupModal').classList.remove('hidden');
+                document.getElementById('popupModal').classList.add('flex');
+                
+                // Start typing effect
+                setTimeout(() => {
+                    const typingElement = document.getElementById('typingText');
+                    typingElement.style.animation = 'none';
+                    typingElement.offsetHeight; // Trigger reflow
+                    typingElement.style.animation = 'typewriter 3s steps(40) 0s both, blink 1s step-end infinite';
+                }, 100);
+            }
+        });
+    function hidePopup() {
+    const modal = document.getElementById('popupModal');
+    if (modal) {
+        modal.classList.add('hidden');
+        modal.classList.remove('flex');
+    }
+}
+
+
+
+        // Tech preference selection
+        document.querySelectorAll('.tech-icon').forEach(icon => {
+            icon.addEventListener('click', function() {
+                // Remove selected class from all icons
+                document.querySelectorAll('.tech-icon').forEach(i => i.classList.remove('selected'));
+                // Add selected class to clicked icon
+                this.classList.add('selected');
+                // Set hidden input value
+                document.getElementById('techPreference').value = this.dataset.tech;
+            });
+        });
+
+        // Form submission
+        document.getElementById('userForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Get form data
+            const formData = new FormData(this);
+            const userInfo = {
+                userName: formData.get('userName'),
+                dateOfBirth: formData.get('dateOfBirth'),
+                techPreference: formData.get('techPreference')
+            };
+            
+            // Validate tech preference
+            if (!userInfo.techPreference) {
+                alert('Please select your preferred technology!');
+                return;
+            }
+            
+            // Save to localStorage
+            localStorage.setItem('jgsUserData', JSON.stringify(userInfo));
+            
+            // Hide popup
+            document.getElementById('popupModal').classList.add('hidden');
+            document.getElementById('popupModal').classList.remove('flex');
+            
+            // Show welcome message
+            document.getElementById('welcomeMessage').classList.remove('hidden');
+            document.getElementById('userName').textContent = userInfo.userName;
+            
+            // Show loading
+            showLoading();
+        });
+
+        function showLoading() {
+            document.getElementById('loadingModal').classList.remove('hidden');
+            document.getElementById('loadingModal').classList.add('flex');
+            
+            let progress = 0;
+            const progressBar = document.getElementById('loadingProgress');
+            
+            const interval = setInterval(() => {
+                progress += Math.random() * 15;
+                if (progress >= 100) {
+                    progress = 100;
+                    clearInterval(interval);
+                    
+                    setTimeout(() => {
+                        // Open new window
+                        window.open('https://sites.google.com/view/sinha-ai/jgs-ai-live-code-editor', '_blank');
+                        
+                        // Hide loading modal
+                        document.getElementById('loadingModal').classList.add('hidden');
+                        document.getElementById('loadingModal').classList.remove('flex');
+                    }, 500);
+                }
+                progressBar.style.width = progress + '%';
+            }, 100);
+        }
+
+        // Add some interactive particles
+        document.addEventListener('mousemove', function(e) {
+            const particles = document.querySelectorAll('.particle');
+            particles.forEach((particle, index) => {
+                const speed = (index + 1) * 0.01;
+                const x = e.clientX * speed;
+                const y = e.clientY * speed;
+                particle.style.transform = `translate(${x}px, ${y}px)`;
+            });
+        });
+         // Event: Close popup
+    popupCloseBtn.addEventListener("click", () => {
+      hidePopup();
+    });
+
+        // Add scroll animations
+        window.addEventListener('scroll', function() {
+            const elements = document.querySelectorAll('.slide-in');
+            elements.forEach(element => {
+                const elementTop = element.getBoundingClientRect().top;
+                const elementVisible = 150;
+                
+                if (elementTop < window.innerHeight - elementVisible) {
+                    element.classList.add('slide-in');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
